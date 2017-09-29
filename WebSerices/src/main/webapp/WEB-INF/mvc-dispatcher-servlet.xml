@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+ xmlns:mvc="http://www.springframework.org/schema/mvc"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ http://www.springframework.org/schema/mvc
+ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+ http://www.springframework.org/schema/context
+ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 	
+ 	<!-- Scan for spring annotated components -->
+	<context:component-scan base-package="com.stuartmathews.controllers" /> 	
+		
+	<!-- <mvc:resources mapping="/resources/**" location="/resources/" /> -->   
+	<!--  <mvc:resources mapping="/resources/**" location="/, classpath:/META-INF/themes/"/> -->
+     
+     <mvc:resources mapping="/themes/**" location="/themes/" />   
+    <!-- Process annotations on registered beans like @Autowired... -->
+    <context:annotation-config/>
+ 
+    <!-- This tag registers the DefaultAnnotationHandlerMapping and
+         AnnotationMethodHandlerAdapter beans that are required for Spring MVC  -->
+    <mvc:annotation-driven/>
+ 
+ 	<!-- This tag allows for mapping the DispatcherServlet to "/" -->
+     <mvc:default-servlet-handler/> 
+    <!-- Exception Resolver that resolves exceptions through @ExceptionHandler methods -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver"/>
+	
+	<bean id="themeSource"
+    	class="org.springframework.ui.context.support.ResourceBundleThemeSource">
+        <property name="basenamePrefix" value="theme-" />
+	</bean>
+	
+	<bean id="themeResolver"
+    	class="org.springframework.web.servlet.theme.FixedThemeResolver">
+    <property name="defaultThemeName" value="silver" />
+	</bean>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		 <property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		 
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+ 
+</beans>
